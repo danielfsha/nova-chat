@@ -55,7 +55,7 @@ export function Sidebar() {
       <aside
         ref={sidebarRef}
         className={cn(
-          "fixed top-0 left-0 h-full w-80 px-4 pb-4 flex flex-col bg-[#ECD5F1] dark:bg-gray-800 shadow-lg transition-transform duration-150 ease-in-out z-50 lg:bg-transparent dark:lg:bg-transparent",
+          "fixed top-0 left-0 h-full w-86 px-4 pb-4 flex flex-col bg-[#ECD5F1] dark:bg-[#140E12] shadow-lg transition-transform duration-150 ease-in-out z-50 lg:bg-transparent dark:lg:bg-transparent",
           sidebarOpen ? "translate-x-0" : "-translate-x-full",
           "sm:translate-x-0 sm:static sm:shadow-none",
           "lg:w-64"

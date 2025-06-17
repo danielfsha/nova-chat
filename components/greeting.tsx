@@ -17,7 +17,7 @@ export default function Greeting() {
 
   return (
     <div className="flex flex-col justify-start items-start mt-2 pt-[189px] space-y-6 px-4 lg:px-12">
-      <h1 className="text-center text-3xl font-bold text-[#501854] lg:text-left">
+      <h1 className="text-center text-3xl font-bold text-[#501854] lg:text-left dark:text-white">
         How can I help you, daniel?
       </h1>
 
@@ -27,7 +27,7 @@ export default function Greeting() {
           <button
             onClick={() => setActiveFilter(category.id)}
             key={category.id}
-            className={`px-4 py-4 text-fuchsia-900/90 text-sm font-normal leading-tight tracking-tight flex flex-col items-center justify-center backdrop-blur-md rounded-lg bg-[#F1C4E6]/30 border border-[#F1C4E6]/70 w-auto ${
+            className={`min-w-18 px-3 py-4 text-fuchsia-900/90 text-sm font-normal leading-tight tracking-tight flex flex-col items-center justify-center backdrop-blur-md rounded-lg bg-[#F1C4E6]/30 border border-[#F1C4E6]/70 w-auto dark:text-white dark:bg-[#27222D] dark:border-white/10 ${
               category.id === activeCategory.id &&
               "bg-pink-900/80 rounded-xl outline-offset-[-1.50px] outline-neutral-700/50 backdrop-blur-lg text-white"
             } lg:flex-row lg:space-x-2 lg:rounded-full lg:py-2 lg:w-auto lg:justify-start`}
@@ -50,7 +50,7 @@ export default function Greeting() {
                 target: { value: suggestion.text },
               } as React.ChangeEvent<HTMLInputElement>)
             }
-            className="text-sm tracking-wide leading-normal py-2 text-[#77347C] border-b-pink-950/10 hover:bg-pink-900/10 px-4 rounded-sm"
+            className="text-sm tracking-wide leading-normal py-2 text-[#77347C] border-b-pink-950/10 hover:bg-pink-900/10 dark:text-pink-200 px-4 rounded-sm"
           >
             {suggestion.text}
           </div>

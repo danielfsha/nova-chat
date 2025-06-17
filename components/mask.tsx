@@ -1,7 +1,11 @@
+"use client";
+
+import React from "react";
+
 export default function Mask({
   width = 259,
   height = 108,
-  className,
+  className = "",
 }: {
   className?: string;
   width?: number;

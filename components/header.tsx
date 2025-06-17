@@ -24,7 +24,7 @@ export function Header() {
             onClick={toggleSidebar}
             variant="ghost"
             size="icon"
-            className="pointer-events-auto text-[#A74370]"
+            className="pointer-events-auto text-[#A74370] dark:text-pink-200"
             aria-label="Toggle sidebar"
           >
             <PanelLeft size={16} />
@@ -40,7 +40,7 @@ export function Header() {
                 style={{ overflow: "hidden", display: "flex" }}
               >
                 <motion.button
-                  className="w-8 h-7 flex items-center justify-center text-[#A74370]"
+                  className="w-8 h-7 flex items-center justify-center text-[#A74370] dark:text-pink-200"
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -20 }}
@@ -52,7 +52,7 @@ export function Header() {
                   <Search size={16} />
                 </motion.button>
                 <motion.button
-                  className="w-8 h-7 flex items-center justify-center text-[#A74370]"
+                  className="w-8 h-7 flex items-center justify-center text-[#A74370] dark:text-pink-200"
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -20 }}
@@ -73,9 +73,9 @@ export function Header() {
         </div>
 
         {/* Right side controls */}
-        <div className="flex items-center bg-pink-200/30 rounded-sm">
+        <div className="flex items-center bg-pink-200/30 rounded-sm dark:text-pink-200">
           <Button variant="ghost" size="sm" aria-label="Settings">
-            <Settings2 className="w-5 h-5" />
+            <Settings2 className="w-5 h-5 " />
           </Button>
           <ModeToggle />
         </div>

@@ -8,6 +8,7 @@ import AiModelSelector from "@/components/ai-model-selector";
 import Link from "next/link";
 
 import { useChatMessage } from "@/hooks/use-chat-messages";
+import { cn } from "@/lib/utils";
 
 export default function ChatMessageForm() {
   const {
@@ -98,11 +99,19 @@ export default function ChatMessageForm() {
   }
 
   return (
-    <div className="absolute bottom-0 left-0 w-full h-auto p-2 pb-0 bg-gradient-to-b from-fuchsia-200/60 via-fuchsia-200 to-fuchsia-200/20 rounded-tl-[20px] rounded-tr-[20px] backdrop-blur-blur z-[100] overf">
+    <div
+      className={cn(
+        "absolute bottom-0 left-0 w-full h-auto p-2 pb-0 bg-gradient-to-b from-fuchsia-200/60 via-fuchsia-200 to-fuchsia-200/20 rounded-tl-[20px] rounded-tr-[20px] backdrop-blur-blur z-[100]",
+        "dark:from-[#27202C] via-[#27202C] to-[#27202C] border-pink-500/10 border"
+      )}
+    >
       <form
         ref={formRef}
         onSubmit={handleCleanAndSubmit}
-        className="relative bg-[#FAF0FB] flex flex-col items-center justify-center rounded-t-[10px] space-y-2 py-1"
+        className={cn(
+          "relative bg-[#FAF0FB] flex flex-col items-center justify-center rounded-t-[10px] space-y-2 py-1 border",
+          "bg-[#2B2531]"
+        )}
       >
         <Textarea
           rows={1}
