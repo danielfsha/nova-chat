@@ -5,7 +5,7 @@ import { BASE_PROMPT } from "@/lib/ai/prompts";
 import { LLM_PROVIDERS } from "@/lib/ai/providers";
 import { Model } from "@/lib/constants";
 
-export const MODEL = (model: Model) => {
+const MODEL = (model: Model) => {
   switch (model.id) {
     case "gemini-2.5-flash":
       return LLM_PROVIDERS.languageModel("gemini-2.5-flash");
