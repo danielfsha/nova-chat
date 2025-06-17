@@ -10,14 +10,14 @@ import {
   Search,
 } from "lucide-react";
 import React, { useState, useRef, useLayoutEffect } from "react";
-import { motion } from "framer-motion";
 import { ModelCard } from "@/components/ai-model-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useChatMessage } from "@/hooks/use-chat-messages";
 
 export default function AIModelSelector() {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedModel, setSelectedModel] = useState(models[0]);
+  const { selectedModel, setSelectedModel } = useChatMessage();
   const [searchQuery, setSearchQuery] = useState("");
   const [showAll, setShowAll] = useState(false);
 

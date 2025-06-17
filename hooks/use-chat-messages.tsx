@@ -11,10 +11,7 @@ import React, {
 
 import { useChat } from "@ai-sdk/react";
 import { ChatRequestOptions, UIMessage } from "ai";
-
-type ChatMessage = {};
-
-type Chat = {};
+import { Model, models } from "@/lib/constants";
 
 type ChatMessageContextType = {
   messages: UIMessage[];
@@ -23,11 +20,14 @@ type ChatMessageContextType = {
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
   ) => void;
   handleFormSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-  chats: Chat[];
-  chatMessages: any[]; // fix the message defn
-  actviveChatId: string | null;
+  chats: any[];
+  chatMessages: any[];
+  activeChatId: string | null;
   setActiveChatId: React.Dispatch<React.SetStateAction<string | null>>;
   setChatMessages: React.Dispatch<React.SetStateAction<any[]>>;
+
+  selectedModel: Model;
+  setSelectedModel: React.Dispatch<React.SetStateAction<Model>>;
 
   reload: (
     chatRequestOptions?: ChatRequestOptions
@@ -41,7 +41,46 @@ const ChatMessageContext = createContext<ChatMessageContextType | undefined>(
   undefined
 );
 
+const LOCAL_STORAGE_KEY = "selectedChatModel";
+
 export const ChatMessageProvider = ({ children }: { children: ReactNode }) => {
+  // Initialize selectedModel with the first model by default
+  const [selectedModel, setSelectedModel] = useState<Model>(models[0]);
+
+  // On mount, load selected model from localStorage if available
+  useEffect(() => {
+    const savedModelJSON = localStorage.getItem(LOCAL_STORAGE_KEY);
+    if (savedModelJSON) {
+      try {
+        const parsedModel: Model = JSON.parse(savedModelJSON);
+        // Optional: Validate parsedModel has an id and matches one of the known models
+        const modelFromStorage = models.find((m) => m.id === parsedModel.id);
+        if (modelFromStorage) {
+          setSelectedModel(parsedModel);
+        } else {
+          // If parsed model is invalid or unknown, fallback to default
+          setSelectedModel(models[0]);
+          localStorage.removeItem(LOCAL_STORAGE_KEY);
+        }
+      } catch (error) {
+        console.error(
+          "Failed to parse selected model from localStorage:",
+          error
+        );
+        setSelectedModel(models[0]);
+        localStorage.removeItem(LOCAL_STORAGE_KEY);
+      }
+    }
+  }, []);
+
+  // When selectedModel changes, save the whole object as JSON to localStorage
+  useEffect(() => {
+    if (selectedModel) {
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(selectedModel));
+    }
+  }, [selectedModel]);
+
+  // Pass selectedModel to useChat to use correct model
   const {
     messages,
     input,
@@ -51,24 +90,24 @@ export const ChatMessageProvider = ({ children }: { children: ReactNode }) => {
     status,
     error,
     stop,
-  } = useChat({});
+  } = useChat({
+    experimental_prepareRequestBody: ({ messages }) => {
+      return {
+        messages,
+        selectedModel,
+      };
+    },
+  });
 
   const [chats, setChats] = useState<any[]>([]);
   const [chatMessages, setChatMessages] = useState<any[]>([]);
-  const [actviveChatId, setActiveChatId] = useState<string | null>(null);
+  const [activeChatId, setActiveChatId] = useState<string | null>(null);
 
-  useEffect(() => {
-    // fetch the chats and available messages
-  }, []);
-
-  // submit the message to the AI model
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted with input:", input);
     handleSubmit();
     handleInputChange({ target: { value: "" } } as any);
-    console.log(messages);
-    // save messages to database and and also to the app context
+    // Save messages to DB or context if needed
   };
 
   return (
@@ -80,9 +119,12 @@ export const ChatMessageProvider = ({ children }: { children: ReactNode }) => {
         handleFormSubmit,
         chats,
         chatMessages,
-        actviveChatId,
+        activeChatId,
         setActiveChatId,
         setChatMessages,
+
+        selectedModel,
+        setSelectedModel,
 
         reload,
         status,

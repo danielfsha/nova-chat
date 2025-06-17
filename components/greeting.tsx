@@ -29,7 +29,7 @@ export default function Greeting() {
             key={category.id}
             className={`px-4 py-4 text-fuchsia-900/90 text-sm font-normal leading-tight tracking-tight flex flex-col items-center justify-center backdrop-blur-md rounded-lg bg-[#F1C4E6]/30 border border-[#F1C4E6]/70 w-auto ${
               category.id === activeCategory.id &&
-              "bg-pink-900/90 rounded-[10px] shadow-[0px_1px_2px_-1px_rgba(0,0,0,0.10),0px_1px_3px_0px_rgba(0,0,0,0.10),-1px_3px_6px_0px_rgba(0,0,0,0.08)] outline-offset-[-1.50px] outline-neutral-700/50 backdrop-blur-md text-white"
+              "bg-pink-900/80 rounded-xl outline-offset-[-1.50px] outline-neutral-700/50 backdrop-blur-lg text-white"
             } lg:flex-row lg:space-x-2 lg:rounded-full lg:py-2 lg:w-auto lg:justify-start`}
           >
             {category.icon}
