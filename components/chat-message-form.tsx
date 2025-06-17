@@ -102,7 +102,7 @@ export default function ChatMessageForm() {
     <div
       className={cn(
         "absolute bottom-0 left-0 w-full h-auto p-2 pb-0 bg-gradient-to-b from-fuchsia-200/60 via-fuchsia-200 to-fuchsia-200/20 rounded-tl-[20px] rounded-tr-[20px] backdrop-blur-blur z-[100]",
-        "dark:from-[#27202C] via-[#27202C] to-[#27202C] border-pink-500/10 border"
+        "dark:from-[#27202C] dark:via-[#27202C] dark:to-[#27202C] border-pink-500/10 border"
       )}
     >
       <form
@@ -110,7 +110,7 @@ export default function ChatMessageForm() {
         onSubmit={handleCleanAndSubmit}
         className={cn(
           "relative bg-[#FAF0FB] flex flex-col items-center justify-center rounded-t-[10px] space-y-2 py-1 border",
-          "bg-[#2B2531]"
+          "dark:bg-[#2B2531]"
         )}
       >
         <Textarea

@@ -16,7 +16,7 @@ if (!GROQ_API_KEY) {
 
 export const LLM_PROVIDERS = customProvider({
   languageModels: {
-    default: google("gemini-1.5-pro"),
+    default: groq("deepseek-r1-distill-llama-70b"),
 
     // GOOGLE
     "gemini-2.5-flash": google("gemini-2.5-flash-preview-04-17"),

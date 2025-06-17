@@ -8,6 +8,7 @@ import { ModeToggle } from "./theme-switch";
 import { AnimatePresence, motion } from "framer-motion";
 
 import { useCommandPalette } from "@/hooks/use-command-palette";
+import { cn } from "@/lib/utils";
 
 export function Header() {
   const { sidebarOpen, toggleSidebar } = useSidebar();
@@ -18,7 +19,7 @@ export function Header() {
       <div className="flex items-center justify-between w-full">
         {/* Sidebar Toggle + Buttons */}
         <div
-          className={`flex items-center rounded-sm backdrop-blur-3xl bg-pink-200/30 p-1`}
+          className={`flex items-center rounded-lg backdrop-blur-3xl bg-pink-200/30 dark:bg-[#1A171D] p-[2px]`}
         >
           <Button
             onClick={toggleSidebar}
@@ -73,7 +74,12 @@ export function Header() {
         </div>
 
         {/* Right side controls */}
-        <div className="flex items-center bg-pink-200/30 rounded-sm dark:text-pink-200">
+        <div
+          className={cn(
+            "flex items-center bg-pink-200/30 rounded-sm",
+            "dark:text-pink-200 dark:bg-[#1A171D]"
+          )}
+        >
           <Button variant="ghost" size="sm" aria-label="Settings">
             <Settings2 className="w-5 h-5 " />
           </Button>

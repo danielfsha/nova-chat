@@ -38,8 +38,7 @@ export function ModelCard({
         type="button"
         onClick={() => handleModelSelect(model)}
         className={cn(
-          "backdrop-blur-sm border border-gray-200 rounded-xl transition-all duration-200 group text-left w-full h-[160px] flex flex-col items-center justify-between pt-4",
-          model.id === selectedModel.id ? "ring-1 ring-pink-900/60" : ""
+          "backdrop-blur-sm border hover:bg-pink-500/10 border-gray-200/10 rounded-xl transition-all duration-200 group text-left w-full h-[160px] flex flex-col items-center justify-between pt-4"
         )}
         aria-pressed={model.id === selectedModel.id}
       >
@@ -50,7 +49,12 @@ export function ModelCard({
           height={42}
           className="mb-2"
         />
-        <span className="flex items-center gap-1 font-medium text-center text-gray-900 text-sm px-2">
+        <span
+          className={cn(
+            "flex items-center gap-1 font-medium text-center text-gray-900 text-sm px-2",
+            "dark:text-pink-100"
+          )}
+        >
           {model.name}
         </span>
         <div className="flex flex-wrap justify-center gap-1 w-full mt-2 py-2">
@@ -68,8 +72,7 @@ export function ModelCard({
       type="button"
       onClick={() => handleModelSelect(model)}
       className={cn(
-        "w-full p-3 transition-colors duration-200 text-left group border-b border-gray-50 last:border-b-0 flex items-center justify-between gap-3",
-        model.id === selectedModel.id ? "bg-purple-50" : ""
+        "w-full p-3 transition-colors duration-200 text-left group flex items-center justify-between gap-3"
       )}
       aria-pressed={model.id === selectedModel.id}
     >
@@ -81,7 +84,12 @@ export function ModelCard({
         className="rounded-lg"
       />
       <span className="flex-1 flex justify-between">
-        <span className="flex items-center font-medium text-gray-900 group-hover:text-purple-700 text-sm">
+        <span
+          className={cn(
+            "flex items-center font-medium text-gray-900 text-sm",
+            "dark:text-pink-100"
+          )}
+        >
           {model.name}
         </span>
         <span className="flex flex-wrap gap-1 mt-1 sm:mt-0">

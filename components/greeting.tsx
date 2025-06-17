@@ -7,8 +7,10 @@ import { categories } from "@/lib/constants";
 
 import { motion } from "framer-motion";
 import { useChatMessage } from "@/hooks/use-chat-messages";
+import { useSession } from "@/lib/auth-client";
 
 export default function Greeting() {
+  const { data: session } = useSession();
   const [activeFilter, setActiveFilter] = useState("create");
   const { handleInputChange } = useChatMessage();
 
@@ -18,7 +20,7 @@ export default function Greeting() {
   return (
     <div className="flex flex-col justify-start items-start mt-2 pt-[189px] space-y-6 px-4 lg:px-12">
       <h1 className="text-center text-3xl font-bold text-[#501854] lg:text-left dark:text-white">
-        How can I help you, daniel?
+        How can I help you {session?.user && session.user.name}?
       </h1>
 
       {/* Filter Buttons */}

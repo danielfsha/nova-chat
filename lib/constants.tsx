@@ -29,6 +29,26 @@ export interface Model {
 
 export const models: Model[] = [
   {
+    id: "deepseek",
+    name: "DeepSeek R1",
+    type: "Groq",
+    status: "limited",
+    capabilities: ["fast", "code"],
+    icon: "deepseek.svg",
+    description: "Specialized reasoning model",
+    category: "favorites",
+  },
+  {
+    id: "qwen-qwq-32b",
+    name: "Qwen QWQ 32B",
+    type: "Groq",
+    status: "available",
+    capabilities: ["analysis", "code"],
+    icon: "qwen.svg",
+    description: "High capacity Groq model for inference",
+    category: "favorites",
+  },
+  {
     id: "gemini-2.5-flash",
     name: "Gemini 2.5 Flash",
     type: "Google",
@@ -46,17 +66,6 @@ export const models: Model[] = [
     capabilities: ["fast", "code"],
     icon: "gemini.svg",
     description: "Lightweight version",
-    category: "others",
-  },
-
-  {
-    id: "qwen-qwq-32b",
-    name: "Qwen QWQ 32B",
-    type: "Groq",
-    status: "available",
-    capabilities: ["analysis", "code"],
-    icon: "qwen.svg",
-    description: "High capacity Groq model for inference",
     category: "others",
   },
   {
@@ -79,16 +88,7 @@ export const models: Model[] = [
     description: "Versatile Llama model with chat features",
     category: "others",
   },
-  {
-    id: "deepseek",
-    name: "DeepSeek R1",
-    type: "Groq",
-    status: "limited",
-    capabilities: ["fast", "code"],
-    icon: "deepseek.svg",
-    description: "Specialized reasoning model",
-    category: "favorites",
-  },
+
   {
     id: "mistral-saba",
     name: "Mistral Saba",

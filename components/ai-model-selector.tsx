@@ -14,6 +14,7 @@ import { ModelCard } from "@/components/ai-model-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useChatMessage } from "@/hooks/use-chat-messages";
+import { cn } from "@/lib/utils";
 
 export default function AIModelSelector() {
   const [isOpen, setIsOpen] = useState(false);
@@ -84,7 +85,7 @@ export default function AIModelSelector() {
         variant="ghost"
         type="button"
         onClick={() => setIsOpen((open) => !open)}
-        className="text-pink-900"
+        className="text-pink-900 dark:text-pink-100"
       >
         <img
           src={`${selectedModel.icon}`}
@@ -99,7 +100,10 @@ export default function AIModelSelector() {
       {/* Dropdown Menu */}
       {isOpen && (
         <div
-          className="absolute left-0 bottom-10 mb-2 bg-white backdrop-blur-md border border-gray-200 rounded-xl overflow-hidden flex flex-col z-[60] w-full max-w-screen-sm transition-all duration-150"
+          className={cn(
+            "absolute left-0 bottom-10 mb-2 bg-white backdrop-blur-md border border-gray-200 rounded-xl overflow-hidden flex flex-col z-[60] w-full max-w-screen-sm transition-all duration-150",
+            "dark:bg-[#100A0E] dark:text-white dark:border-pink-950/20"
+          )}
           style={
             showAll
               ? { height: `calc(100vh - ${100}px)`, width: "100%" }
@@ -107,7 +111,12 @@ export default function AIModelSelector() {
           }
         >
           {/* Search */}
-          <div className="p-2 pb-0 text-pink-900 border-pink-800 shrink-0">
+          <div
+            className={cn(
+              "p-2 pb-0 text-pink-900 border-pink-800 shrink-0",
+              "dark:text-white"
+            )}
+          >
             <div className="relative">
               <Search className="absolute w-4 h-4 left-3 top-1/2 transform -translate-y-1/2" />
               <Input
@@ -115,22 +124,32 @@ export default function AIModelSelector() {
                 placeholder="Search models..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="border-b pl-10"
+                className={cn("border-b pl-10")}
               />
             </div>
           </div>
 
           {/* Upgrade Section */}
-          <div className="m-4 p-4 rounded-sm bg-gradient-to-b from-pink-400/20 via-pink-300/10 to-white border border-pink-800/20 text-white shrink-0">
+          <div
+            className={cn(
+              "m-4 p-4 rounded-sm bg-gradient-to-b from-pink-400/20 via-pink-300/10 to-white border border-pink-800/20",
+              "from-pink-400/20 via-pink-300/10 to-transparent border border-pink-800/20"
+            )}
+          >
             <div className="flex items-center justify-between mb-2">
-              <span className="font-bold text-xl text-[#454554]">
+              <span
+                className={cn(
+                  "font-bold text-xl text-[#454554]",
+                  "dark:text-white"
+                )}
+              >
                 Unlock all models + higher limits
               </span>
             </div>
             <div className="flex items-center justify-between">
               <div className="flex items-baseline gap-1 text-pink-400">
                 <span className="text-3xl font-bold">$8</span>
-                <span className="">/ month</span>
+                <span className="dark:text-pink-100">/ month</span>
               </div>
               <Button>
                 <span className="font-bold text-sm">Upgrade now</span>
@@ -157,10 +176,7 @@ export default function AIModelSelector() {
               <div className="space-y-6">
                 {/* Favorites Section */}
                 <div>
-                  <div className="flex items-center gap-2 mb-4">
-                    <Heart className="w-4 h-4 text-purple-500" />
-                    <h3 className="font-semibold text-gray-900">Favorites</h3>
-                  </div>
+                  <h3 className="font-semibold text-gray-900">Favorites</h3>
                   <div className="grid grid-cols-2 gap-3 md:grid-cols-5">
                     {favoriteModels.map((model) => (
                       <div key={model.id}>
@@ -195,7 +211,7 @@ export default function AIModelSelector() {
           </div>
 
           {/* Footer */}
-          <div className="p-4 px-1 py-1 bg-gray-50 border-t border-gray-100 shrink-0 pr-2">
+          <div className="p-4 px-1 py-1 shrink-0 pr-2">
             <div className="flex items-center justify-between text-sm">
               {/* Show All Toggle */}
               <div className="shrink-0">
