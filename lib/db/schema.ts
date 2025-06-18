@@ -1,3 +1,4 @@
+import { generateId } from "ai";
 import { InferSelectModel } from "drizzle-orm";
 import {
   pgTable,
@@ -5,9 +6,7 @@ import {
   timestamp,
   boolean,
   varchar,
-  jsonb,
-  primaryKey,
-  foreignKey,
+  json,
 } from "drizzle-orm/pg-core";
 
 // Change all id/userId/chatId/... to text instead of uuid
@@ -79,3 +78,49 @@ export const verification = pgTable("verification", {
 });
 
 export type Verification = InferSelectModel<typeof verification>;
+
+export const chat = pgTable("chat", {
+  id: text("id")
+    .primaryKey()
+    .notNull()
+    .$defaultFn(() => generateId()),
+  userId: text("userId")
+    .notNull()
+    .references(() => user.id),
+  title: text("title").notNull().default("New Chat"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  visibility: varchar("visibility", { enum: ["public", "private"] })
+    .notNull()
+    .default("private"),
+});
+
+export type Chat = InferSelectModel<typeof chat>;
+
+export const message = pgTable("message", {
+  id: text("id")
+    .primaryKey()
+    .notNull()
+    .$defaultFn(() => generateId()),
+  chatId: text("chat_id")
+    .notNull()
+    .references(() => chat.id, { onDelete: "cascade" }),
+  role: text("role").notNull(), // user, assistant, or tool
+  parts: json("parts").notNull(), // Store parts as JSON in the database
+  attachments: json("attachments").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export type Message = InferSelectModel<typeof message>;
+
+export const stream = pgTable("stream", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => generateId()),
+  chatId: text("chatId")
+    .notNull()
+    .references(() => chat.id, { onDelete: "cascade" }),
+  createdAt: timestamp("createdAt").notNull().defaultNow(),
+});
+
+export type Stream = InferSelectModel<typeof stream>;

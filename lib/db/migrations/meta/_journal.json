@@ -15,6 +15,13 @@
       "when": 1750185055114,
       "tag": "0001_fine_mesmero",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1750255522065,
+      "tag": "0002_busy_exodus",
+      "breakpoints": true
     }
   ]
 }

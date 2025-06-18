@@ -8,19 +8,32 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 
 export const ModeToggle: React.FC = () => {
-  const { theme, setTheme } = useTheme();
-  const isDark = theme === "dark";
+  const { theme, setTheme, resolvedTheme } = useTheme();
+  const [mounted, setMounted] = React.useState(false);
+
+  // When mounted on client, set mounted to true
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Don't render anything until mounted to avoid hydration mismatch and flicker
+  if (!mounted) {
+    return null;
+  }
+
+  const isDark = resolvedTheme === "dark";
 
   const toggleTheme = () => {
-    if (theme == "light") {
-      setTheme("dark");
-    } else {
-      setTheme("light");
-    }
+    setTheme(isDark ? "light" : "dark");
   };
 
   return (
-    <Button onClick={toggleTheme} size={"icon"} variant="ghost">
+    <Button
+      onClick={toggleTheme}
+      size={"icon"}
+      variant="ghost"
+      aria-label="Toggle theme"
+    >
       <div className="relative w-6 h-6">
         <motion.div
           className="absolute inset-0 flex items-center justify-center"

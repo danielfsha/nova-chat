@@ -20,7 +20,7 @@ export function Header() {
       <div className="flex items-center justify-between w-full">
         {/* Sidebar Toggle + Buttons */}
         <div
-          className={`flex items-center rounded-lg backdrop-blur-3xl bg-pink-200/30 dark:bg-[#1A171D] p-[2px]`}
+          className={`flex items-center rounded-sm backdrop-blur-3xl bg-pink-200/30 dark:bg-[#1A171D] p-[2px]`}
         >
           <Button
             onClick={toggleSidebar}
