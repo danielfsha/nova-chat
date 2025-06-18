@@ -13,7 +13,7 @@ export default function Chat() {
   return (
     <div className="relative flex flex-col w-full max-w-4xl mx-auto h-full">
       {messages.length === 0 && <Greeting />}
-      <div className="flex-1 overflow-y-auto px-4 py-32 space-y-12 scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600">
+      <div className="flex-1 overflow-y-auto px-4 py-32 pt-18 space-y-12 scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600">
         {messages.map((message) => (
           <ChatMessage key={message.id} message={message} />
         ))}

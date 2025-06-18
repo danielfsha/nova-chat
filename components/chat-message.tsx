@@ -11,13 +11,13 @@ export default function ChatMessage({ message }: { message: UIMessage }) {
   return (
     <div
       className={cn(
-        "flex items-start w-full min-w-0",
-        isUser ? "justify-end pl-16" : "justify-start pr-16"
+        "flex items-start w-full min-w-0 ",
+        isUser ? "justify-end pl-12" : "justify-start pr-12"
       )}
     >
       <div
         className={cn(
-          "flex flex-col space-y-4 max-w-[70%] min-w-0", // limit max width of message container
+          "flex flex-col space-y-4 min-w-0", // limit max width of message container
           "min-w-0"
         )}
       >
