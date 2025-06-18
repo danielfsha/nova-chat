@@ -22,7 +22,7 @@ import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
 import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
-interface CodeSnippetProps {
+interface CodeBlockProps {
   code: string;
   language: string;
   title?: string;
@@ -31,7 +31,7 @@ interface CodeSnippetProps {
   maxHeight?: string;
 }
 
-export const CodeSnippet: React.FC<CodeSnippetProps> = ({
+export const CodeSnippet: React.FC<CodeBlockProps> = ({
   code,
   language,
   title,
@@ -41,6 +41,7 @@ export const CodeSnippet: React.FC<CodeSnippetProps> = ({
 }) => {
   const { copied, copyToClipboard } = useClipboard();
 
+  // Map language to icon component
   const getLanguageIcon = (lang: string) => {
     const language = lang.toLowerCase();
 
@@ -70,6 +71,7 @@ export const CodeSnippet: React.FC<CodeSnippetProps> = ({
     return iconMap[language] || <Code2 className="w-4 h-4 text-gray-400" />;
   };
 
+  // Map language to display name
   const getLanguageDisplayName = (lang: string) => {
     const language = lang.toLowerCase();
 
@@ -98,6 +100,7 @@ export const CodeSnippet: React.FC<CodeSnippetProps> = ({
     );
   };
 
+  // Map language to file extension for download
   const extensionMap: Record<string, string> = {
     javascript: "js",
     js: "js",
@@ -157,13 +160,22 @@ export const CodeSnippet: React.FC<CodeSnippetProps> = ({
         )}
       >
         <span
-          className={cn("text-pink-900 capitalize pl-2", "dark:text-pink-100")}
+          className={cn(
+            "flex items-center gap-1 text-pink-900 capitalize pl-2",
+            "dark:text-pink-100"
+          )}
         >
+          {getLanguageIcon(language)}
           {getLanguageDisplayName(language)}
         </span>
 
-        <div className="flex items-center justify-center space-x-1">
-          <Button variant="ghost" size="icon" onClick={handleDownload}>
+        <div className="flex items-center justify-center space-x-1 pr-2">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={handleDownload}
+            aria-label="Download code"
+          >
             <Download size={16} />
           </Button>
           <Button
@@ -195,29 +207,30 @@ export const CodeSnippet: React.FC<CodeSnippetProps> = ({
           wrapLines
           wrapLongLines
           language={language}
+          showLineNumbers={showLineNumbers}
           customStyle={{
             margin: 0,
             padding: "1.5rem",
             background: "transparent",
             fontSize: "16px",
             lineHeight: "1.6",
-            fontFamily: "BerkeleyMono, Consolas",
+            fontFamily: "BerkeleyMono, Consolas, monospace",
           }}
           className="font-[family-name:var(--font-geist-mono)]"
-          // showLineNumbers={showLineNumbers}
-          // lineNumberStyle={{
-          //   color: "#6B7280",
-          //   fontSize: "16px",
-          //   paddingRight: "1.5rem",
-          //   userSelect: "none",
-          //   minWidth: "2.5rem",
-          // }}
-          lineProps={(lineNumber) => ({
+          lineNumberStyle={{
+            color: "#6B7280",
+            fontSize: "16px",
+            paddingRight: "1.5rem",
+            userSelect: "none",
+            minWidth: "2.5rem",
+          }}
+          lineProps={() => ({
             style: {
               display: "block",
               width: "100%",
             },
           })}
+          style={oneDark}
         >
           {code}
         </SyntaxHighlighter>

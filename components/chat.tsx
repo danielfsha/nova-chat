@@ -6,8 +6,10 @@ import ChatMessageForm from "./chat-message-form";
 import Greeting from "./greeting";
 import { SearchThreadsCommand } from "./search-threads-command";
 import Loader from "./loader";
+import { useSession } from "@/lib/auth-client";
 
 export default function Chat() {
+  const { data: session } = useSession();
   const { messages, status } = useChatMessage();
 
   return (

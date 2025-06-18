@@ -35,6 +35,10 @@ export function ModelCard({
   if (isGridView) {
     return (
       <button
+        style={{
+          opacity: model.status === "limited" ? 0.5 : 1,
+        }}
+        disabled={model.status == "limited"}
         type="button"
         onClick={() => handleModelSelect(model)}
         className={cn(
@@ -70,6 +74,10 @@ export function ModelCard({
   // List view
   return (
     <button
+      style={{
+        opacity: model.status === "limited" ? 0.5 : 1,
+      }}
+      disabled={model.status == "limited"}
       type="button"
       onClick={() => handleModelSelect(model)}
       className={cn(

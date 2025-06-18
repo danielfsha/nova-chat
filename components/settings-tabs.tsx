@@ -43,7 +43,7 @@ export function SettingTabs() {
         ))}
       </TabsList>
 
-      {navigationItems.map((item) => (
+      {navigationItems.map((item, index) => (
         <TabsContent key={item.value} value={item.value} className="mt-0">
           <div className="flex flex-col lg:flex-row">
             {/* Main Content - changes based on active tab */}

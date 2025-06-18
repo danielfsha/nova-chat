@@ -12,6 +12,7 @@ import { useChat } from "@ai-sdk/react";
 import { ChatRequestOptions, UIMessage } from "ai";
 import { Model, models } from "@/lib/constants";
 import { useLocalStorage } from "@/hooks/use-local-storage";
+import { useSession } from "@/lib/auth-client";
 
 type ChatMessageContextType = {
   messages: UIMessage[];
@@ -21,6 +22,8 @@ type ChatMessageContextType = {
   ) => void;
   handleFormSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   chats: any[];
+  setChats: React.Dispatch<React.SetStateAction<any[]>>;
+
   chatMessages: any[];
   activeChatId: string | null;
   setActiveChatId: React.Dispatch<React.SetStateAction<string | null>>;
@@ -47,6 +50,7 @@ const ChatMessageContext = createContext<ChatMessageContextType | undefined>(
 const LOCAL_STORAGE_KEY = "selectedChatModel";
 
 export const ChatMessageProvider = ({ children }: { children: ReactNode }) => {
+  const { data: session } = useSession();
   // Use custom useLocalStorage hook here
   const [selectedModel, setSelectedModel] = useLocalStorage<Model>(
     LOCAL_STORAGE_KEY,
@@ -80,6 +84,12 @@ export const ChatMessageProvider = ({ children }: { children: ReactNode }) => {
       experimental_attachments: selectedImages ?? undefined,
     });
     handleInputChange({ target: { value: "" } } as any);
+
+    // update in the database if the user is logged in
+    if (session?.user) {
+      // get the chat
+      // update the message
+    }
   };
 
   return (
@@ -90,6 +100,7 @@ export const ChatMessageProvider = ({ children }: { children: ReactNode }) => {
         handleInputChange,
         handleFormSubmit,
         chats,
+        setChats,
         chatMessages,
         activeChatId,
         setActiveChatId,

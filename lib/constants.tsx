@@ -32,7 +32,7 @@ export const models: Model[] = [
     id: "deepseek",
     name: "DeepSeek R1",
     type: "Groq",
-    status: "limited",
+    status: "available",
     capabilities: ["fast", "code"],
     icon: "deepseek.svg",
     description: "Specialized reasoning model",

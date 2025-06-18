@@ -88,7 +88,7 @@ export default function AIModelSelector() {
         className="text-pink-900 dark:text-pink-100"
       >
         <img
-          src={`${selectedModel.icon}`}
+          src={`${selectedModel.icon || models[0].icon}`}
           width={18}
           height={18}
           className="aspect-auto "
