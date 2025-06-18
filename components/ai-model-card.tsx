@@ -38,7 +38,8 @@ export function ModelCard({
         type="button"
         onClick={() => handleModelSelect(model)}
         className={cn(
-          "backdrop-blur-sm border hover:bg-pink-500/10 border-gray-200/10 rounded-xl transition-all duration-200 group text-left w-full h-[160px] flex flex-col items-center justify-between pt-4"
+          "backdrop-blur-sm border hover:bg-pink-500/10 border-gray-200/50 rounded-xl transition-all duration-200 group text-left w-full h-[160px] flex flex-col items-center justify-between pt-4",
+          "dark:border-pink-200/10"
         )}
         aria-pressed={model.id === selectedModel.id}
       >

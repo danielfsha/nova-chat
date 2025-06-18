@@ -101,7 +101,7 @@ export default function ChatMessageForm() {
   return (
     <div
       className={cn(
-        "absolute bottom-0 left-0 w-full h-auto p-2 pb-0 bg-gradient-to-b from-fuchsia-200/60 via-fuchsia-200 to-fuchsia-200/20 rounded-tl-[20px] rounded-tr-[20px] backdrop-blur-blur z-[100]",
+        "absolute bottom-0 left-0 w-full h-auto p-2 pb-0 bg-gradient-to-b from-fuchsia-200/60 via-fuchsia-200 to-fuchsia-200/20 rounded-tl-[20px] rounded-tr-[20px] backdrop-blur-blur z-[100] border-b-0",
         "dark:from-[#27202C] dark:via-[#27202C] dark:to-[#27202C] border-pink-500/10 border"
       )}
     >
@@ -109,7 +109,7 @@ export default function ChatMessageForm() {
         ref={formRef}
         onSubmit={handleCleanAndSubmit}
         className={cn(
-          "relative bg-[#FAF0FB] flex flex-col items-center justify-center rounded-t-[10px] space-y-2 py-1 border",
+          "relative bg-[#FAF0FB] flex flex-col items-center justify-center rounded-t-[10px] space-y-2 py-1 border border-b-0",
           "dark:bg-[#2B2531]"
         )}
       >

@@ -9,6 +9,7 @@ import { AnimatePresence, motion } from "framer-motion";
 
 import { useCommandPalette } from "@/hooks/use-command-palette";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 export function Header() {
   const { sidebarOpen, toggleSidebar } = useSidebar();
@@ -80,9 +81,11 @@ export function Header() {
             "dark:text-pink-200 dark:bg-[#1A171D]"
           )}
         >
-          <Button variant="ghost" size="sm" aria-label="Settings">
-            <Settings2 className="w-5 h-5 " />
-          </Button>
+          <Link href="/settings/subscription">
+            <Button variant="ghost" size="sm" aria-label="Settings">
+              <Settings2 className="w-5 h-5 " />
+            </Button>
+          </Link>
           <ModeToggle />
         </div>
       </div>

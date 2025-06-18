@@ -55,13 +55,13 @@ export function Sidebar() {
       <aside
         ref={sidebarRef}
         className={cn(
-          "fixed top-0 left-0 h-full w-86 px-4 pb-4 flex flex-col bg-[#ECD5F1] dark:bg-[#140E12] shadow-lg transition-transform duration-150 ease-in-out z-50 lg:bg-transparent dark:lg:bg-transparent",
+          "fixed top-0 left-0 h-full w-72 px-4 pb-4 flex flex-col bg-[#ECD5F1] dark:bg-[#140E12] shadow-lg transition-transform duration-150 ease-in-out z-50 lg:bg-transparent dark:lg:bg-transparent",
           sidebarOpen ? "translate-x-0" : "-translate-x-full",
           "sm:translate-x-0 sm:static sm:shadow-none",
           "lg:w-64"
         )}
       >
-        <div className="w-full overflow-y-auto flex flex-col items-center justify-start space-y-4">
+        <div className="w-full overflow-y-auto flex flex-col items-center justify-start space-y-2">
           <h1 className="py-4 text-lg font-bold">Nova.Chat</h1>
           <Button className="w-full">New chat</Button>
           <div className="relative w-full h-9 border-b border-pink-800/20">
@@ -79,7 +79,12 @@ export function Sidebar() {
 
         <div className="flex-1 w-full"></div>
 
-        <div className="w-full h-14 rounded-lg flex items-center justify-start text-pink-900 hover:bg-gray-100 dark:hover:bg-gray-700  px-4">
+        <div
+          className={cn(
+            "w-full h-14 rounded-lg flex items-center justify-start text-pink-900 hover:bg-gray-100 px-4",
+            "dark:hover:bg-pink-950/30"
+          )}
+        >
           {!session?.user ? (
             <Link
               href="/auth"
@@ -90,7 +95,7 @@ export function Sidebar() {
             </Link>
           ) : (
             <Link
-              href="/subscription"
+              href="/settings/subscription"
               className="flex items-center justify-center space-x-4"
             >
               <img

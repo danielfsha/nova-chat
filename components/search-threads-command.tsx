@@ -23,7 +23,7 @@ export function SearchThreadsCommand() {
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
           <CommandGroup heading="Suggestions">
-            <CommandItem>
+            {/* <CommandItem>
               <Calendar />
               <span>Calendar</span>
             </CommandItem>
@@ -34,7 +34,7 @@ export function SearchThreadsCommand() {
             <CommandItem>
               <Calculator />
               <span>Calculator</span>
-            </CommandItem>
+            </CommandItem> */}
           </CommandGroup>
         </CommandList>
       </CommandDialog>

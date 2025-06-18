@@ -107,7 +107,7 @@ export default function AIModelSelector() {
           style={
             showAll
               ? { height: `calc(100vh - ${100}px)`, width: "100%" }
-              : { height: 500, width: 380 }
+              : { height: 500, width: 380, maxWidth: "100%" }
           }
         >
           {/* Search */}
