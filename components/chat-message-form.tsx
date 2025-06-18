@@ -1,11 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ArrowUp, Globe, Paperclip, StopCircle } from "lucide-react";
+import { ArrowUp, Globe, Paperclip } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import AiModelSelector from "@/components/ai-model-selector";
-import Link from "next/link";
 
 import { useChatMessage } from "@/hooks/use-chat-messages";
 import { cn } from "@/lib/utils";
@@ -17,18 +16,16 @@ export default function ChatMessageForm() {
     handleFormSubmit,
     status,
     stop,
+    selectedImages,
+    setSelectedImages,
   } = useChatMessage();
+
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  const [selectedImages, setSelectedImages] = useState<File[]>([]);
 
   // Local input state separate from global input to avoid overwrite conflicts
   const [localInput, setLocalInput] = useState(globalInput);
   const [isUserTyping, setIsUserTyping] = useState(false);
-
-  // Track last transcript for inactivity
-  const [lastTranscript, setLastTranscript] = useState("");
-  const [lastTranscriptTime, setLastTranscriptTime] = useState(Date.now());
 
   // Sync global input to localInput when global input changes externally
   useEffect(() => {
@@ -44,7 +41,7 @@ export default function ChatMessageForm() {
     handleInputChange(e);
   }
 
-  // When user stops typing for 1.5 seconds, reset isUserTyping to false to allow transcription updates again
+  // When user stops typing for 1.5 seconds, reset isUserTyping to false
   useEffect(() => {
     if (!isUserTyping) return;
     const timeout = setTimeout(() => {
@@ -63,7 +60,7 @@ export default function ChatMessageForm() {
   function handleCleanAndSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (typeof localInput === "string") {
-      const cleaned = localInput.replace(/^[\s\n]+|[\s\n]+$/g, "");
+      const cleaned = localInput.trim();
       if (cleaned !== localInput) {
         setLocalInput(cleaned);
         handleInputChange({ target: { value: cleaned } } as any);
@@ -71,9 +68,14 @@ export default function ChatMessageForm() {
     }
     handleFormSubmit(e);
     setIsUserTyping(false);
-    setLastTranscript("");
     setLocalInput(""); // reset local input after submit
     handleInputChange({ target: { value: "" } } as any); // reset global input after submit
+
+    // Clear selected images after submit
+    setSelectedImages(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
   }
 
   function handleAttachClick() {
@@ -82,20 +84,25 @@ export default function ChatMessageForm() {
 
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const files = e.target.files;
-    if (!files) return;
+    if (!files || files.length === 0) return;
 
+    // Filter only image files
     const imageFiles = Array.from(files).filter((file) =>
       file.type.startsWith("image/")
     );
 
     if (imageFiles.length === 0) return;
 
-    setSelectedImages(imageFiles);
+    // Convert filtered images back to a FileList-like object is complicated,
+    // so we store as File[] or just store the original FileList (here we store FileList)
+    // Since your context expects FileList | null, we can store original files directly
+    // but filtered files are a subset, so we create a DataTransfer to hold filtered files:
 
-    // TODO: upload or handle images here
-    console.log("Selected images:", imageFiles);
+    const dataTransfer = new DataTransfer();
+    imageFiles.forEach((file) => dataTransfer.items.add(file));
+    setSelectedImages(dataTransfer.files);
 
-    e.target.value = "";
+    e.target.value = ""; // reset input so same file can be selected again if needed
   }
 
   return (
@@ -113,6 +120,24 @@ export default function ChatMessageForm() {
           "dark:bg-[#2B2531]"
         )}
       >
+        {(selectedImages?.length ?? 0) > 0 && (
+          <div className="flex space-x-2 overflow-x-auto py-1 px-2 max-w-full">
+            {selectedImages &&
+              Array.from(selectedImages).map((file, idx) => {
+                const url = URL.createObjectURL(file);
+                return (
+                  <img
+                    key={idx}
+                    src={url}
+                    alt={file.name}
+                    className="h-16 w-16 object-cover rounded-md"
+                    onLoad={() => URL.revokeObjectURL(url)}
+                  />
+                );
+              })}
+          </div>
+        )}
+
         <Textarea
           rows={1}
           value={localInput}
@@ -130,23 +155,6 @@ export default function ChatMessageForm() {
           onChange={handleFileChange}
           className="hidden"
         />
-
-        {selectedImages.length > 0 && (
-          <div className="flex space-x-2 overflow-x-auto py-1 px-2 max-w-full">
-            {selectedImages.map((file, idx) => {
-              const url = URL.createObjectURL(file);
-              return (
-                <img
-                  key={idx}
-                  src={url}
-                  alt={file.name}
-                  className="h-16 w-16 object-cover rounded-md"
-                  onLoad={() => URL.revokeObjectURL(url)}
-                />
-              );
-            })}
-          </div>
-        )}
 
         <div className="w-full flex items-center justify-between px-2 py-1">
           <div className="flex items-center space-x-1">

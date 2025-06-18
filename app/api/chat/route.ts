@@ -1,11 +1,14 @@
-import { streamText } from "ai";
+import { Message, streamText } from "ai";
 
 import { tools } from "@/lib/ai/tools";
 import { BASE_PROMPT } from "@/lib/ai/prompts";
 import { LLM_PROVIDERS } from "@/lib/ai/providers";
 import { Model } from "@/lib/constants";
 
-const MODEL = (model: Model) => {
+const MODEL = (model: Model, hasAttachment: boolean) => {
+  // might want to add support for another model supportting pdf and images
+  if (hasAttachment) return LLM_PROVIDERS.languageModel("gemini-2.5-flash");
+
   switch (model.id) {
     case "gemini-2.5-flash":
       return LLM_PROVIDERS.languageModel("gemini-2.5-flash");
@@ -37,8 +40,22 @@ export async function POST(req: Request) {
   const { messages, selectedModel } = await req.json();
   console.log("Selected model:", selectedModel);
 
+  const messagesHavePDF = messages.some((message: Message) =>
+    message.experimental_attachments?.some(
+      (a) => a.contentType === "application/pdf"
+    )
+  );
+
+  const messagesHaveImage = messages.some((message: Message) =>
+    message.experimental_attachments?.some(
+      (a) => a.contentType === "application/pdf"
+    )
+  );
+
+  const hasAttachment = messagesHaveImage || messagesHavePDF;
+
   const result = await streamText({
-    model: MODEL(selectedModel),
+    model: MODEL(selectedModel, hasAttachment),
     system: BASE_PROMPT,
     messages,
     tools,

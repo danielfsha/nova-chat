@@ -29,6 +29,9 @@ type ChatMessageContextType = {
   selectedModel: Model;
   setSelectedModel: React.Dispatch<React.SetStateAction<Model>>;
 
+  selectedImages: FileList | null;
+  setSelectedImages: React.Dispatch<React.SetStateAction<FileList | null>>;
+
   reload: (
     chatRequestOptions?: ChatRequestOptions
   ) => Promise<string | null | undefined>;
@@ -46,6 +49,7 @@ const LOCAL_STORAGE_KEY = "selectedChatModel";
 export const ChatMessageProvider = ({ children }: { children: ReactNode }) => {
   // Initialize selectedModel with the first model by default
   const [selectedModel, setSelectedModel] = useState<Model>(models[0]);
+  const [selectedImages, setSelectedImages] = useState<FileList | null>(null);
 
   // On mount, load selected model from localStorage if available
   useEffect(() => {
@@ -105,7 +109,9 @@ export const ChatMessageProvider = ({ children }: { children: ReactNode }) => {
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    handleSubmit();
+    handleSubmit(event, {
+      experimental_attachments: selectedImages ?? undefined,
+    });
     handleInputChange({ target: { value: "" } } as any);
     // Save messages to DB or context if needed
   };
@@ -125,6 +131,9 @@ export const ChatMessageProvider = ({ children }: { children: ReactNode }) => {
 
         selectedModel,
         setSelectedModel,
+
+        selectedImages,
+        setSelectedImages,
 
         reload,
         status,
