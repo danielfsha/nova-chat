@@ -113,9 +113,9 @@ export const capabilityIcons = {
 };
 
 export const capabilityColors = {
-  fast: "bg-[#D1ECE6] text-[#43C7AC]",
-  vision: "bg-[#D6E0F1] text-[#4189C9]",
-  code: "bg-[#DAD7F2] text-[#555BCE]",
+  fast: "bg-[#D1ECE6]/90 text-[#43C7AC]",
+  vision: "bg-[#D6E0F1]/90 text-[#4189C9]",
+  code: "bg-[#DAD7F2]/90 text-[#555BCE]",
   reasoning: "bg-orange-100 text-orange-700 border-orange-200",
   "advanced-reasoning": "bg-red-100 text-red-700 border-red-200",
   "image-gen": "bg-pink-100 text-pink-700 border-pink-200",

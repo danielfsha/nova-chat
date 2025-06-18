@@ -5,36 +5,53 @@ import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { motion } from "framer-motion";
 
-export function ModeToggle() {
-  const { setTheme } = useTheme();
+export const ModeToggle: React.FC = () => {
+  const { theme, setTheme } = useTheme();
+  const isDark = theme === "dark";
+
+  const toggleTheme = () => {
+    if (theme == "light") {
+      setTheme("dark");
+    } else {
+      setTheme("light");
+    }
+  };
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon">
-          <Sun className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
-          <Moon className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
-          <span className="sr-only">Toggle theme</span>
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme("light")}>
-          Light
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")}>
-          Dark
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")}>
-          System
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <Button onClick={toggleTheme} size={"icon"} variant="ghost">
+      <div className="relative w-6 h-6">
+        <motion.div
+          className="absolute inset-0 flex items-center justify-center"
+          animate={{
+            scale: isDark ? 0 : 1,
+            rotate: isDark ? 90 : 0,
+            opacity: isDark ? 0 : 1,
+          }}
+          transition={{
+            duration: 0.2,
+            ease: "easeInOut",
+          }}
+        >
+          <Sun className="w-6 h-6 drop-shadow-sm" />
+        </motion.div>
+
+        <motion.div
+          className="absolute inset-0 flex items-center justify-center"
+          animate={{
+            scale: isDark ? 1 : 0,
+            rotate: isDark ? 0 : -90,
+            opacity: isDark ? 1 : 0,
+          }}
+          transition={{
+            duration: 0.2,
+            ease: "easeInOut",
+          }}
+        >
+          <Moon className="w-6 h-6 drop-shadow-sm" />
+        </motion.div>
+      </div>
+    </Button>
   );
-}
+};

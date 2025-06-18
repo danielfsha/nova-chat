@@ -23,7 +23,7 @@ export default function ChatMessage({ message }: { message: UIMessage }) {
                   key={`text-${idx}-${part.text.substring(0, 10)}`}
                   className={cn(
                     "bg-[#F7E6F4] border border-[#F1C4E6]/50 text-[#492C61]",
-                    "dark:bg-[#28212D] dark:text-white dark:border-pink-950",
+                    "dark:bg-[#2B2532] dark:text-white dark:border-pink-50/10",
                     "px-4 py-3 rounded-xl"
                   )}
                 >

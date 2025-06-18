@@ -1,6 +1,5 @@
 import React from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { Copy, Check, Code2, Download } from "lucide-react";
 import { useClipboard } from "@/hooks/use-clipboard";
 
@@ -20,6 +19,8 @@ import { BiLogoPostgresql } from "react-icons/bi";
 import { LuCodeXml } from "react-icons/lu";
 import { VscJson } from "react-icons/vsc";
 import { Button } from "./ui/button";
+import { cn } from "@/lib/utils";
+import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 interface CodeSnippetProps {
   code: string;
@@ -143,11 +144,21 @@ export const CodeSnippet: React.FC<CodeSnippetProps> = ({
 
   return (
     <div
-      className={`rounded-xl ${className} rounded-2xl overflow-hidden w-full`}
+      className={cn(
+        `rounded-xl ${className} rounded-sm overflow-hidden w-full font-[family-name:var(--font-geist-mono)] tracking-tight bg-[#F5ECF9]`,
+        "dark:bg-[#1A161F]"
+      )}
     >
       {/* Header */}
-      <div className="relative flex items-center justify-between h-8 px-2 bg-[#F1C4E6]">
-        <span className="text-pink-900 capitalize pl-2">
+      <div
+        className={cn(
+          "relative flex items-center justify-between pl-2 bg-[#F1C4E6]",
+          "dark:bg-[#362D3D]"
+        )}
+      >
+        <span
+          className={cn("text-pink-900 capitalize pl-2", "dark:text-pink-100")}
+        >
           {getLanguageDisplayName(language)}
         </span>
 
@@ -174,8 +185,11 @@ export const CodeSnippet: React.FC<CodeSnippetProps> = ({
 
       {/* Code Content */}
       <div
-        className="relative overflow-auto overflow-x-hidden bg-pink-100"
-        style={{ maxHeight }}
+        className={cn(
+          "relative overflow-auto overflow-x-hidden",
+          "dark:bg-[#1A161F]"
+        )}
+        style={{ maxHeight, background: "inherit" }}
       >
         <SyntaxHighlighter
           wrapLines
@@ -188,9 +202,8 @@ export const CodeSnippet: React.FC<CodeSnippetProps> = ({
             fontSize: "16px",
             lineHeight: "1.6",
             fontFamily: "BerkeleyMono, Consolas",
-            whiteSpace: "pre-wrap", // allows wrapping
-            wordBreak: "break-word",
           }}
+          className="font-[family-name:var(--font-geist-mono)]"
           // showLineNumbers={showLineNumbers}
           // lineNumberStyle={{
           //   color: "#6B7280",
